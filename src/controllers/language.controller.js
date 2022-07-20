@@ -2,8 +2,9 @@ import { getConnection } from "./../database/database";
 
 const getLanguages = async (req, res) => {
     try {
+        
         const connection = await getConnection();
-        const result = await connection.query("SELECT id, name, programmers FROM language WHERE active = 1");
+        const result = await connection.query("SELECT * FROM language WHERE active = 1");
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -15,7 +16,7 @@ const getLanguage = async (req, res) => {
     try {
         const { id } = req.params;
         const connection = await getConnection();
-        const result = await connection.query("SELECT id, name, programmers FROM language WHERE id = ?", id);
+        const result = await connection.query("SELECT id, name, programmers FROM language WHERE id = 3");
         res.json(result);
     } catch (error) {
         res.status(500);
