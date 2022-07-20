@@ -28,7 +28,7 @@ const addLanguage = async (req, res) => {
     try {
         const { name, programmers } = req.body;
 
-        if (name === undefined || programmers === undefined) {
+        if (name === undefined || name === '' || programmers === undefined) {
             res.status(400).json({ message: "Bad Request. Please fill all field." });
         }
 
