@@ -3,7 +3,7 @@ import { getConnection } from "./../database/database";
 const getLanguages = async (req, res) => {
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT id, name, programmers FROM language");
+        const result = await connection.query("SELECT id, name, programmers FROM language WHERE active = 1");
         res.json(result);
     } catch (error) {
         res.status(500);
