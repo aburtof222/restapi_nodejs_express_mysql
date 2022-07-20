@@ -15,7 +15,7 @@ const getLanguage = async (req, res) => {
     try {
         const { id } = req.params;
         const connection = await getConnection();
-        const result = await connection.query("SELECT id, name, programmers FROM language WHERE id = ?", id);
+        const result = await connection.query("SELECT id, name, programmers FROM language WHERE id = 3");
         res.json(result);
     } catch (error) {
         res.status(500);
