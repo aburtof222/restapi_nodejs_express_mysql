@@ -1,9 +1,9 @@
 import { getConnection } from "../database/database";
 
-const getProductos = async (req, res) => {
+const getCategorias = async (req, res) => {
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT id, nombre, precio, stock FROM productos");
+        const result = await connection.query("SELECT * FROM categorias");
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -11,11 +11,11 @@ const getProductos = async (req, res) => {
     }
 };
 
-const getProducto = async (req, res) => {
+const getCategoria = async (req, res) => {
     try {
         const { id } = req.params;
         const connection = await getConnection();
-        const result = await connection.query("SELECT id, nombre, precio FROM productos WHERE id = ?", id);
+        const result = await connection.query("SELECT id, nombre, descripcion FROM categorias WHERE id = ?", id);
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -23,36 +23,36 @@ const getProducto = async (req, res) => {
     }
 };
 
-const addProducto = async (req, res) => {
+const addCategoria = async (req, res) => {
     try {
-        const { nombre, precio } = req.body;
+        const { nombre, descripcion } = req.body;
 
-        if (nombre === undefined || precio === undefined) {
+        if (nombre === undefined || descripcion === undefined) {
             res.status(400).json({ message: "Bad Request. Please fill all field." });
         }
 
-        const producto = { nombre, precio };
+        const categoria = { nombre, descripcion };
         const connection = await getConnection();
-        await connection.query("INSERT INTO productos SET ?", producto);
-        res.json({ message: "Producto añadido " });
+        await connection.query("INSERT INTO categorias SET ?", categoria);
+        res.json({ message: "Categoria añadida" });
     } catch (error) {
         res.status(500);
         res.send(error.message);
     }
 };
 
-const updateProducto = async (req, res) => {
+const updateCategoria = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nombre, precio } = req.body;
+        const { nombre, descripcion } = req.body;
 
-        if (id === undefined || nombre === undefined || precio === undefined) {
+        if (id === undefined || nombre === undefined || descripcion === undefined) {
             res.status(400).json({ message: "Bad Request. Please fill all field." });
         }
 
-        const producto = { nombre, precio };
+        const categoria = { nombre, descripcion };
         const connection = await getConnection();
-        const result = await connection.query("UPDATE productos SET ? WHERE id = ?", [producto, id]);
+        const result = await connection.query("UPDATE categorias SET ? WHERE id = ?", [categoria, id]);
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -60,11 +60,11 @@ const updateProducto = async (req, res) => {
     }
 };
 
-const deleteProducto = async (req, res) => {
+const deleteCategoria = async (req, res) => {
     try {
         const { id } = req.params;
         const connection = await getConnection();
-        const result = await connection.query("DELETE FROM productos WHERE id = ?", id);
+        const result = await connection.query("DELETE FROM categorias WHERE id = ?", id);
         res.json(result);
     } catch (error) {
         res.status(500);
@@ -73,9 +73,9 @@ const deleteProducto = async (req, res) => {
 };
 
 export const methods = {
-    getProductos,
-    getProducto,
-    addProducto,
-    updateProducto,
-    deleteProducto
+    getCategorias,
+    getCategoria,
+    addCategoria,
+    updateCategoria,
+    deleteCategoria
 };
